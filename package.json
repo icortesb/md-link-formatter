@@ -3,9 +3,11 @@
   "displayName": "md-link-formatter",
   "description": "converts URLs into Markdown-formatted links or images automatically.",
   "version": "0.0.1",
+  "publisher": "Iván Cortés Buenard",
   "engines": {
     "vscode": "^1.103.0"
   },
+  "author": "Iván Cortés Buenard",
   "categories": [
     "Other"
   ],
