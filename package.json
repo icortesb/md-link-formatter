@@ -35,6 +35,10 @@
       }
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/icortesb/md-link-formatter"
+  },
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
