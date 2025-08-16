@@ -1,0 +1,51 @@
+{
+  "name": "md-link-formatter",
+  "displayName": "md-link-formatter",
+  "description": "Converts plain URLs into Markdown-formatted links automatically.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.103.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "mdlinks.convertirLinks",
+        "title": "Convertir links planos a Markdown"
+      },
+      {
+        "command": "mdlinks.convertirLinksConInput",
+        "title": "Convertir links con texto manual"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "mdlinks.convertirLinks",
+        "key": "ctrl+alt+l",
+        "when": "editorTextFocus && editorLangId == markdown"
+      },
+      {
+        "command": "mdlinks.convertirLinksConInput",
+        "key": "ctrl+alt+i",
+        "when": "editorTextFocus && editorLangId == markdown"
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.103.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "eslint": "^9.32.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
