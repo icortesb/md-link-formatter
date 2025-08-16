@@ -1,7 +1,7 @@
 {
   "name": "md-link-formatter",
   "displayName": "md-link-formatter",
-  "description": "Converts plain URLs into Markdown-formatted links automatically.",
+  "description": "converts URLs into Markdown-formatted links or images automatically.",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.103.0"
@@ -15,11 +15,11 @@
     "commands": [
       {
         "command": "mdlinks.convertirLinks",
-        "title": "Convertir links planos a Markdown"
+        "title": "Convert links automatically"
       },
       {
         "command": "mdlinks.convertirLinksConInput",
-        "title": "Convertir links con texto manual"
+        "title": "Convert links with input"
       }
     ],
     "keybindings": [

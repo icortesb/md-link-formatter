@@ -1,65 +1,77 @@
-# md-link-formatter README
+# md-link-formatter
 
-This is the README for your extension "md-link-formatter". After writing up a brief description, we recommend including the following sections.
-
-## Features
-
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Automatically converts plain URLs into Markdown links or images in VS Code, either automatically or with manual input.
 
 ---
 
-## Working with Markdown
+## Features
 
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+- **Automatic link formatting:** Converts plain URLs in the active document to Markdown format.
+  - Example:
+    - `google.com` → `[Google.com](http://google.com)`
+    - `http://example.com/pic.png` → `![Pic](http://example.com/pic.png)`
+- **Format all text or just a selection**: You can format all URLs in the document or only those in the selected text.
+- **Manual link formatting:** Prompts you to enter custom text for each URL or image.
+- **Smart detection:** Avoids re-formatting URLs that are already in Markdown links or images.
+- **Image support:** jpg, jpeg, png, gif, svg, webp.
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
+> Example of automatic conversion:
 
-## For more information
+Original text:
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+Google.com
+https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/React.svg/1200px-React.svg.png
 
-**Enjoy!**
+
+After automatic conversion:
+
+[Google.com](http://google.com)
+![1200px-React](https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/React.svg/1200px-React.svg.png)
+
+> Example of manual conversion:
+
+Original text:
+
+google.com
+https://github.com/profile
+
+After manual conversion with input:
+
+[Google website](http://google.com)
+[GitHub profile](https://github.com/profile)
+
+---
+
+## Requirements
+
+No additional dependencies required.
+
+---
+
+## How to Use
+
+This extension works via keyboard shortcuts:
+
+- `Ctrl + Alt + L` – Automatically formats all plain URLs in the active document into Markdown links or images.
+- `Ctrl + Alt + I` – Prompts for custom text for each URL or image in the selection or entire document.
+
+*Works on the current selection if text is selected, or the entire document if no selection is made.*
+---
+
+## Known Issues
+
+- URLs without a protocol (e.g., google.com) inside existing Markdown links or images are ignored.
+- Does not validate if the URL actually exists or is reachable.
+
+---
+
+## Release Notes
+
+### 1.0.0
+- First public release of md-link-formatter.
+- Automatic and manual Markdown URL formatting.
+
+## About the Author
+
+This extension was developed by Iván Cortés.  
+Connect with me on [LinkedIn](https://www.linkedin.com/in/ivan-cortes-buenard/).
