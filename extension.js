@@ -137,7 +137,7 @@ function activate(context) {
         const isImage = /\.(jpg|jpeg|png|gif|svg|webp)$/i.test(url);
 
         const input = await vscode.window.showInputBox({
-          prompt: `Ingrese el texto para ${isImage ? "la imagen" : "el link"} "${url}"`,
+          prompt: `Enter the text for the ${isImage ? "image" : "link"} "${url}"`,
           value: "",
         });
 
