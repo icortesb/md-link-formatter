@@ -1,5 +1,40 @@
 const vscode = require("vscode");
 
+function createUrlRegex() {
+  const TLDs = [
+    "com",
+    "org",
+    "net",
+    "io",
+    "dev",
+    "app",
+    "gov",
+    "edu",
+    "ar",
+    "us",
+    "uk",
+    "fr",
+    "de",
+    "jp",
+    "cn",
+    "br",
+    "es",
+    "it",
+    "ru",
+    "in",
+    "ca",
+    "au",
+  ];
+
+  const tldPattern = TLDs.join("|");
+
+  // Plain URL regex
+  return new RegExp(
+    `(?<!\\!\\[[^\\]]*\\]\\()(?<!\\[[^\\]]*\\]\\()([a-z0-9.-]+\\.(${tldPattern})(\\/[^\s\\]\\)]*)?)`,
+    "gi"
+  );
+}
+
 function activate(context) {
   // ----------------------------
   // Automatic link formatting
@@ -14,13 +49,13 @@ function activate(context) {
       const text = doc.getText();
       const workspaceEdit = new vscode.WorkspaceEdit();
 
-      // Plain URL regex
-      const urlRegex = /(?<!\!\[[^\]]*\]\()(?<!\[[^\]]*\]\()((https?:\/\/|www\.)?[a-z0-9.-]+\.[a-z]{2,})(\/[^\s\]\)]*)?/gi;
-
+      const urlRegex = createUrlRegex();
 
       // Formatted link and image regex
-      const formattedLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+|www\.[^\s)]+)\)/gi;
-      const formattedImageRegex = /!\[([^\]]*)\]\((https?:\/\/[^\s)]+|www\.[^\s)]+)\)/gi;
+      const formattedLinkRegex =
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+|www\.[^\s)]+)\)/gi;
+      const formattedImageRegex =
+        /!\[([^\]]*)\]\((https?:\/\/[^\s)]+|www\.[^\s)]+)\)/gi;
 
       // Avoid formatting already formatted links and images
       const formattedRanges = [];
@@ -33,7 +68,9 @@ function activate(context) {
       }
 
       function isInFormattedRange(index) {
-        return formattedRanges.some(([start, end]) => index >= start && index < end);
+        return formattedRanges.some(
+          ([start, end]) => index >= start && index < end
+        );
       }
 
       // Find all plain URLs that are not in formatted ranges
@@ -55,8 +92,9 @@ function activate(context) {
 
         const label = isImage
           ? url.split("/").pop().split(".")[0]
-          : new URL(url.startsWith("http") ? url : `http://${url}`)
-              .hostname.replace("www.", "");
+          : new URL(
+              url.startsWith("http") ? url : `http://${url}`
+            ).hostname.replace("www.", "");
         const formattedLabel = label.charAt(0).toUpperCase() + label.slice(1);
 
         const replacement = isImage
@@ -67,9 +105,7 @@ function activate(context) {
       }
 
       await vscode.workspace.applyEdit(workspaceEdit);
-      vscode.window.showInformationMessage(
-        "Links formatted to Markdown."
-      );
+      vscode.window.showInformationMessage("Links formatted to Markdown.");
     }
   );
 
@@ -95,10 +131,12 @@ function activate(context) {
 
       const workspaceEdit = new vscode.WorkspaceEdit();
 
-      // const urlRegex = /(https?:\/\/|www\.)[^\s\]\)]+/gi;
-      const urlRegex = /(?<!\!\[[^\]]*\]\()(?<!\[[^\]]*\]\()((https?:\/\/|www\.)?[a-z0-9.-]+\.[a-z]{2,})(\/[^\s\]\)]*)?/gi;
-      const formattedLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+|www\.[^\s)]+)\)/gi;
-      const formattedImageRegex = /!\[([^\]]*)\]\((https?:\/\/[^\s)]+|www\.[^\s)]+)\)/gi;
+      const urlRegex = createUrlRegex();
+
+      const formattedLinkRegex =
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+|www\.[^\s)]+)\)/gi;
+      const formattedImageRegex =
+        /!\[([^\]]*)\]\((https?:\/\/[^\s)]+|www\.[^\s)]+)\)/gi;
 
       const formattedRanges = [];
       let match;
@@ -110,7 +148,9 @@ function activate(context) {
       }
 
       function isInFormattedRange(index) {
-        return formattedRanges.some(([start, end]) => index >= start && index < end);
+        return formattedRanges.some(
+          ([start, end]) => index >= start && index < end
+        );
       }
 
       const matches = [];
@@ -137,21 +177,23 @@ function activate(context) {
         const isImage = /\.(jpg|jpeg|png|gif|svg|webp)$/i.test(url);
 
         const input = await vscode.window.showInputBox({
-          prompt: `Enter the text for the ${isImage ? "image" : "link"} "${url}"`,
+          prompt: `Enter the text for the ${
+            isImage ? "image" : "link"
+          } "${url}"`,
           value: "",
         });
 
         if (!input) continue;
 
-        const replacement = isImage ? `![${input}](${url})` : `[${input}](${url})`;
+        const replacement = isImage
+          ? `![${input}](${url})`
+          : `[${input}](${url})`;
 
         workspaceEdit.replace(doc.uri, range, replacement);
       }
 
       await vscode.workspace.applyEdit(workspaceEdit);
-      vscode.window.showInformationMessage(
-        "Links formatted to Markdown."
-      );
+      vscode.window.showInformationMessage("Links formatted to Markdown.");
     }
   );
 
